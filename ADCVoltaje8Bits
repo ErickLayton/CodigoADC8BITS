@@ -1,0 +1,110 @@
+#include <iostream>
+#include <bitset>
+#include <cmath>
+#include <thread>
+#include <chrono>
+#include <cstdlib> 
+using namespace std;
+
+struct Voltaje {
+    float voltajeActual;
+    float voltajeMaximo;
+    int resultadoDecimal;
+    string resultadoBinario;
+};
+
+string convertirABinario8Bits(int numero) {
+    bitset<8> binario(numero);
+    return binario.to_string();
+}
+
+void mostrarAnimacion() {
+    string mensaje = "Creado por Erick Gael Gonzaga Sosa";
+    for (char c : mensaje) {
+        cout << c << flush;
+        this_thread::sleep_for(chrono::milliseconds(30));
+    }
+    cout<<endl<<endl;
+}
+
+void animacionSalida() {
+    string mensaje = "Saliendo del programa...";
+    for (char c : mensaje) {
+        cout << c << flush;
+        this_thread::sleep_for(chrono::milliseconds(30));
+    }
+    cout << endl;
+}
+
+void mostrarTitulo() {
+    cout << "Creado por Erick Gael Gonzaga Sosa\n";
+    cout << "\n\n";
+}
+
+void mostrarMenu() {
+    mostrarTitulo();
+    cout << "Menu Principal\n";
+    cout << "1. Transformar decimal a binario\n";
+    cout << "2. Salir\n";
+    cout << "Selecciona una opcion: ";
+}
+
+void limpiarPantalla() {
+#if defined(_WIN32) || defined(_WIN64)
+    system("cls"); 
+#else
+    system("clear");
+#endif
+}
+
+int main() {
+    mostrarAnimacion();
+
+    int opcion;
+    do {
+        limpiarPantalla();
+        mostrarMenu();
+        cin>>opcion;
+        cout<<"\n";
+
+        switch (opcion) {
+            case 1: {
+                limpiarPantalla();
+                mostrarTitulo(); 
+                float voltajeActual, voltajeMaximo;
+                cout << "Introduce el voltaje actual: ";
+                cin >> voltajeActual;
+
+                cout << "Introduce el voltaje maximo: ";
+                cin >> voltajeMaximo;
+                cout << "\n";
+
+                int resultadoDecimal = static_cast<int>(round((voltajeActual * 255) / voltajeMaximo));
+
+                string resultadoBinario = convertirABinario8Bits(resultadoDecimal);
+
+                cout << "Resultado en decimal (redondeado): " << resultadoDecimal << endl;
+                cout << "Resultado en binario: " << resultadoBinario << endl;
+
+                cout << "Presiona Enter para volver al menu...";
+                cin.ignore(); 
+                cin.get();   
+                break;
+            }
+            case 2:
+                limpiarPantalla();
+                mostrarTitulo();
+                animacionSalida();
+                break;
+
+            default:
+                limpiarPantalla();
+                mostrarTitulo();
+                cout << "Opcion invalida.\n";
+                this_thread::sleep_for(chrono::seconds(2));
+        }
+
+    } while (opcion != 2);
+
+    return 0;
+}
